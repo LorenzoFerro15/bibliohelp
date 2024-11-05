@@ -140,16 +140,16 @@ impl Article {
         if self.volume != -1 {
             writeln!(writer, "    volume         = {{{}}},", self.volume)?;
         } else {
-            writeln!(writer, "    volume         = {{}}")?;
+            writeln!(writer, "    volume         = {{}},")?;
         }
         if self.number != -1 {
             writeln!(writer, "    number         = {{{}}},", self.number)?;
         } else {
-            writeln!(writer, "    number         = {{}}")?;
+            writeln!(writer, "    number         = {{}},")?;
         }
         writeln!(writer, "    month          = {},", self.month)?;
         writeln!(writer, "    year           = {{{}}},", self.year)?;
-        writeln!(writer, "    pages          = {{{}}}", self.pages)?;
+        writeln!(writer, "    pages          = {{{}}},", self.pages)?;
         writeln!(writer, "    doi            = {{{}}}", self.doi)?;
         writeln!(writer, "}}")?;
         Ok(())

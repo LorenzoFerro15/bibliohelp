@@ -106,7 +106,7 @@ impl Collection {
         writeln!(writer, "    booktitle      = {{{{{}}}}},", self.booktitle)?;
         writeln!(writer, "    editor         = {{{}}},", self.editor)?;
         writeln!(writer, "    publisher      = {{{}}},", self.publisher)?;
-        writeln!(writer, "    year           = {},", self.year)?;
+        writeln!(writer, "    year           = {{{}}},", self.year)?;
         writeln!(writer, "    pages          = {{{}}},", self.pages)?;
         writeln!(writer, "    isbn           = {{{}}},", self.isbn)?;
         writeln!(writer, "    doi            = {{{}}}", self.doi)?;

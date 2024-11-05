@@ -113,7 +113,7 @@ impl Proceedings {
         writeln!(writer, "    year           = {{{}}},", self.year)?;
         writeln!(writer, "    month          = {},", self.month)?;
         writeln!(writer, "    pages          = {{{}}},", self.pages)?;
-        writeln!(writer, "    doi            = {{{}}}", self.doi)?;
+        writeln!(writer, "    doi            = {{{}}},", self.doi)?;
         writeln!(writer, "}}")?;
         Ok(())
     }
