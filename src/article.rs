@@ -1,4 +1,5 @@
 use std::{collections::HashMap, io::{self, Write}};
+use colored::Colorize;
 use regex::Regex;
 
 use crate::constants;
@@ -59,47 +60,47 @@ impl Article {
         let doi_re = Regex::new(constants::REGEX_DOI).unwrap();
 
         if !author_re.is_match(&author) {
-            return Err("[ERR] Invalid authors format".to_string());
+            return Err(format!("{} Invalid authors format", constants::ERR.red()));
         }
 
         if !title_re.is_match(&title) {
-            return Err("[ERR] Invalid title format".to_string());
+            return Err(format!("{} Invalid title format", constants::ERR.red()));        
         }
 
         if !journal_re.is_match(&journal) {
-            return Err("[ERR] Invalid journal format".to_string());
+            return Err(format!("{} Invalid journal format", constants::ERR.red()));
         }
 
         if !month_re.is_match(&month) {
-            return Err("[ERR] Invalid month format".to_string());
+            return Err(format!("{} Invalid month format", constants::ERR.red()));
         }
 
         if !pages_re.is_match(&pages) {
-            return Err("[ERR] Invalid pages format".to_string());
+            return Err(format!("{} Invalid pages format", constants::ERR.red()));
         }
 
         if pages == "" || pages.is_empty() {
-            eprintln!("[WARN] Non present page number in entry with title: {}", title);
+            eprintln!("{} Non present page number in entry with title: {}", constants::WARN.yellow(), title);
         } else if !pages_re.is_match(&pages) {
-            return Err(format!("[ERR] Invalid pages format: |{}|", pages));
+            return Err(format!("{} Invalid pages format: |{}|", constants::ERR.red(), pages));
         }else {
             let pages_split: Vec<&str> = pages.split("-").collect();
             let start_page = pages_split[0].parse::<i32>().unwrap();
             let end_page = pages_split[1].parse::<i32>().unwrap();
             if start_page > end_page {
-                return Err("[ERR] Invalid pages second page is lower than first".to_string());
+                return Err(format!("{} Invalid pages second page is lower than first", constants::ERR.red()));
             }
         }
 
         let year: i32 = match year.parse() {
             Ok(y) => y,
-            Err(_) => return Err("[ERR] Invalid year format".to_string()),
+            Err(_) => return Err(format!("{} Invalid year format", constants::ERR.red())),
         };
 
         let volume: i32 = match volume.parse() {
             Ok(y) => y,
             Err(_) => {
-                eprintln!("[WARN] Invalid volume format in entry with title: {}", title);
+                eprintln!("{} Invalid volume format in entry with title: {}", constants::WARN.yellow(), title);
                 -1
             }
             
@@ -108,13 +109,13 @@ impl Article {
         let number: i32 = match number.parse() {
             Ok(y) => y,
             Err(_) => {
-                eprintln!("[WARN] Invalid number format in entry with title: {}", title);
+                eprintln!("{} Invalid number format in entry with title: {}", constants::WARN.yellow(), title);
                 -1
             }
         };
 
         if !doi_re.is_match(&doi) {
-            eprintln!("[WARN] Invalid DOI format in entry with title: {}", title);
+            eprintln!("{} Invalid DOI format in entry with title: {}", constants::WARN, title);
             doi = String::new();
         }
 

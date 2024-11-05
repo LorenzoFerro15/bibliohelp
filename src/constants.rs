@@ -6,4 +6,8 @@ pub const REGEX_ADDRESS: &str = r"^[A-Za-z\s]+ \([A-Za-z\s]+(?:, [A-Za-z\s]+)?\)
 pub const REGEX_PAGES: &str = r"^\d+-\d+$";
 pub const REGEX_DOI: &str = r"^10\.\d+\/[-._;()\/:A-Za-z0-9\.]+$";
 pub const REGEX_MONTH: &str = r"^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)$";
-pub const REGEX_ISBN: &str = r"^(?:\d{3}-\d-\d{4}-\d{4}-\d|\d{1,5}-\d{1,7}-\d{1,7}-[\dXx])$";
+pub const REGEX_ISBN: &str = r"^[\d-]+$";
+
+pub const ERR: &str = "[ERR]";
+pub const WARN: &str = "[WARN]";
+pub const INFO: &str = "[INFO]";

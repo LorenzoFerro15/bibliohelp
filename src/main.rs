@@ -1,11 +1,13 @@
 use std::fs::File;
 use std::io::Read;
 use std::env;
+use colored::Colorize;
 
 mod proceedings;
 mod article;
 mod constants;
 mod book;
+mod collection;
 
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -72,7 +74,7 @@ fn extract_entries(input: &str) -> std::io::Result<()> {
                             proceeding.print(&mut output_file).unwrap();
                         }
                         Err(e) => {
-                            eprintln!("[ERR] Error processing inproceedings entry {}: {}", entry_id, e);
+                            eprintln!("{} Error processing inproceedings entry {}: {}", constants::ERR, entry_id.red(), e);
                         }
                     }
                 }
@@ -83,7 +85,7 @@ fn extract_entries(input: &str) -> std::io::Result<()> {
                             article.print(&mut output_file).unwrap();
                         }
                         Err(e) => {
-                            eprintln!("[ERR] Error processing article entry {}: {}", entry_id, e);
+                            eprintln!("{} Error processing article entry {}: {}", constants::ERR.red(), entry_id, e);
                         }
                     }
                 }
@@ -93,14 +95,24 @@ fn extract_entries(input: &str) -> std::io::Result<()> {
                             book.print(&mut output_file).unwrap();
                         }
                         Err(e) => {
-                            eprintln!("[ERR] Error processing book entry {}: {}", entry_id, e);
+                            eprintln!("{} Error processing book entry {}: {}", constants::ERR.red(), entry_id, e);
+                        }
+                    }
+                }
+                "incollection" => {
+                    match collection::Collection::new(&entry_content) {
+                        Ok(collection) => {
+                            collection.print(&mut output_file).unwrap();
+                        }
+                        Err(e) => {
+                            eprintln!("{} Error processing collection entry {}: {}", constants::ERR.red(), entry_id, e);
                         }
                     }
                 }
                 "misc" => {
                 }
                 _ => {
-                    eprintln!("Unknown entry type: {}", entry_type);
+                    eprintln!("{} Unknown entry type: {}", constants::INFO.blue(), entry_type);
                 }
             }
         }

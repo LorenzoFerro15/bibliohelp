@@ -1,5 +1,6 @@
 use std::{collections::HashMap, io::{self, Write}};
 use regex::Regex;
+use colored::Colorize;
 
 use crate::constants;
 
@@ -36,28 +37,28 @@ impl Book {
         let isbn_re = Regex::new(constants::REGEX_ISBN).unwrap();
 
         if !author_re.is_match(&author) {
-            return Err("[ERR] Invalid authors format".to_string());
+            return Err(format!("{} Invalid authors format", constants::ERR.red()));
         }
 
         if !title_re.is_match(&title) {
-            return Err("[ERR] Invalid title format".to_string());
+            return Err(format!("{} Invalid title format", constants::ERR.red()));
         }
 
         if !publisher_re.is_match(&publisher) {
-            return Err("[ERR] Invalid publisher format".to_string());
+            return Err(format!("{} Invalid publisher format", constants::ERR.red()));
         }
 
         if !month_re.is_match(&month) {
-            return Err("[ERR] Invalid month format".to_string());
+            return Err(format!("{} Invalid month format", constants::ERR.red()));
         }
 
         if !isbn_re.is_match(&isbn) {
-            return Err("[ERR] Invalid ISBN format".to_string());
+            return Err(format!("{} Invalid ISBN format", constants::ERR.red()));
         }
 
         let year: i32 = match year.parse() {
             Ok(y) => y,
-            Err(_) => return Err("[ERR] Invalid year format".to_string()),
+            Err(_) => return Err(format!("{} Invalid year format", constants::ERR.red())),
         };
 
         Ok(Book {
